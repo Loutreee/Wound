@@ -1,0 +1,16 @@
+{
+  "name": "wound",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "postinstall": "cd server && npm install && cd ../client && npm install",
+    "dev": "npm run init-db && concurrently -n server,client \"npm run dev:server\" \"npm run dev:client\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:client": "cd client && npm run dev",
+    "init-db": "cd server && npm run init-db",
+    "test": "cd server && npm run test"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  }
+}

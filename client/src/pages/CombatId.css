@@ -1,0 +1,152 @@
+.combat-id-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.combat-id-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.combat-id-layout {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .combat-id-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.combat-id-cards {
+  position: sticky;
+  top: 1rem;
+}
+
+.combat-id-cards h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+.combat-id-cards-hint {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+}
+
+.combat-id-cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.combat-id-detail {
+  min-width: 0;
+}
+
+.combat-id-detail-header {
+  margin-bottom: 1rem;
+}
+
+.combat-id-detail-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+}
+
+.combat-id-detail-empty {
+  padding: 2rem;
+  text-align: center;
+}
+
+.combat-id-detail-empty p {
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.combat-id-grid {
+  display: grid;
+  grid-template-columns: minmax(200px, 340px) 1fr;
+  gap: 1.5rem;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .combat-id-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.combat-id-silhouette h3,
+.combat-id-form h3 {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+}
+
+.combat-id-hint {
+  margin: 0.75rem 0 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.combat-id-injuries {
+  margin-top: 1.5rem;
+}
+
+.combat-id-injuries h3 {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+}
+
+.injury-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.injury-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.95rem;
+}
+
+.injury-list li:last-child {
+  border-bottom: none;
+}
+
+.injury-notes {
+  color: var(--text-muted);
+  font-weight: normal;
+}
+
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.text-muted {
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.btn-primary {
+  padding: 0.5rem 1rem;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius);
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: var(--accent-hover);
+}

@@ -1,0 +1,43 @@
+.body-silhouette-wrap {
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 320px;
+}
+
+.body-silhouette {
+  width: 100%;
+  max-width: 280px;
+  height: auto;
+}
+
+.body-silhouette-zone {
+  --silhouette-default: #2a2e3a;
+  cursor: pointer;
+  transition: filter 0.15s, stroke 0.15s;
+  stroke: var(--border);
+  stroke-width: 0.8;
+}
+
+.body-silhouette-zone:hover {
+  filter: brightness(1.2);
+}
+
+.body-silhouette-zone[data-selected="true"] {
+  stroke: var(--accent);
+  stroke-width: 1.5;
+  filter: brightness(1.15);
+}
+
+.body-silhouette-wrap--compact {
+  min-height: 0;
+  padding: 0.5rem;
+}
+
+.body-silhouette-wrap--compact .body-silhouette {
+  max-width: 100px;
+}

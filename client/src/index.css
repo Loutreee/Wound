@@ -1,0 +1,72 @@
+:root {
+  --bg-deep: #0d0e12;
+  --bg-card: #15171e;
+  --bg-elevated: #1a1d26;
+  --border: #2a2e3a;
+  --text: #e4e6eb;
+  --text-muted: #8b8f9a;
+  --accent: #c94f2e;
+  --accent-hover: #e05a36;
+  --wound: #c94f2e;
+  --necrosis: #3d2a2a;
+  --contusion: #5c4a20;
+  --bandage: #6b5b4f;
+  --success: #2d5a3d;
+  --warning: #8a6d2e;
+  --danger: #8b2e2e;
+  --radius: 8px;
+  --font-sans: 'Outfit', system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background: var(--bg-deep);
+  color: var(--text);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+h1, h2, h3 {
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--accent-hover);
+}
+
+button {
+  font-family: var(--font-sans);
+  cursor: pointer;
+}
+
+input, select, textarea {
+  font-family: var(--font-sans);
+}
+
+/* Utilitaires */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}

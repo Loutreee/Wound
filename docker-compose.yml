@@ -1,0 +1,13 @@
+services:
+  wound:
+    build: .
+    ports:
+      - "3002:3000"
+    environment:
+      - PORT=3000
+      - DB_PATH=/app/data/wound.db
+    volumes:
+      - wound_data:/app/data
+
+volumes:
+  wound_data:
