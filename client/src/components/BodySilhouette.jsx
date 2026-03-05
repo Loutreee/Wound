@@ -1,21 +1,103 @@
 import { useMemo } from 'react';
 import './BodySilhouette.css';
 
-// Zones SVG approximatives (vue de face) – coordonnées normalisées 0–100
-const BODY_ZONES = {
-  head: { path: 'M 50 5 L 75 18 L 78 45 L 22 45 L 25 18 Z', label: 'Tête' },
-  torso: { path: 'M 28 45 L 72 45 L 70 85 L 30 85 Z', label: 'Torse' },
-  arm_left: { path: 'M 22 48 L 8 50 L 5 72 L 20 70 L 28 50 Z', label: 'Bras gauche' },
-  arm_right: { path: 'M 78 48 L 92 50 L 95 72 L 80 70 L 72 50 Z', label: 'Bras droit' },
-  forearm_left: { path: 'M 8 72 L 2 85 L 18 88 L 20 72 Z', label: 'Avant-bras gauche' },
-  forearm_right: { path: 'M 92 72 L 98 85 L 82 88 L 80 72 Z', label: 'Avant-bras droit' },
-  hand_left: { path: 'M 2 85 L 0 95 L 16 96 L 18 88 Z', label: 'Main gauche' },
-  hand_right: { path: 'M 98 85 L 100 95 L 84 96 L 82 88 Z', label: 'Main droite' },
-  leg_left: { path: 'M 30 85 L 35 88 L 38 98 L 48 98 L 48 88 L 30 85 Z', label: 'Jambe gauche' },
-  leg_right: { path: 'M 70 85 L 65 88 L 62 98 L 52 98 L 52 88 L 70 85 Z', label: 'Jambe droite' },
-  foot_left: { path: 'M 35 98 L 32 100 L 50 100 L 48 98 Z', label: 'Pied gauche' },
-  foot_right: { path: 'M 65 98 L 68 100 L 50 100 L 52 98 Z', label: 'Pied droit' },
-};
+// Zones issues du SVG fourni, avec possibilité d'avoir plusieurs paths pour la même partie
+const BODY_ZONES = [
+  // Tête
+  {
+    id: 'head',
+    label: 'Tête',
+    path:
+      'M860.041 654.835c0 -43.563 26.916 -78.878 60.117 -78.878 15.942 0 31.233 8.312 42.507 23.103s17.608 34.855 17.608 55.775c0 43.563 -26.916 78.878 -60.117 78.878s-60.115 -35.317 -60.115 -78.878',
+  },
+  // Buste (tout mappé sur \"torso\")
+  {
+    id: 'torso',
+    label: 'Torse',
+    path: 'M816.052 733.713h208.208v110.568H816.052z',
+  },
+  {
+    id: 'torso',
+    label: 'Torse',
+    path:
+      'm1016.023 844.268 -30.824 123.298h-127.363l-30.824 -123.298z',
+  },
+  {
+    id: 'torso',
+    label: 'Torse',
+    path: 'M836.76 967.565h166.55v110.568h-166.55z',
+  },
+  // Bras droit
+  {
+    id: 'arm_right',
+    label: 'Bras droit',
+    path:
+      'm712.288 876.992 53.517 -136.561 50.252 19.728 -53.517 136.559z',
+  },
+  {
+    id: 'forearm_right',
+    label: 'Avant-bras droit',
+    path:
+      'm658.771 1013.57 53.517 -136.559 40.188 15.729 -53.517 136.559z',
+  },
+  {
+    id: 'hand_right',
+    label: 'Main droite',
+    path:
+      'm624.787 1088.55 29.991 -76.512 40.188 15.729 -29.991 76.512z',
+  },
+  // Bras gauche
+  {
+    id: 'arm_left',
+    label: 'Bras gauche',
+    path:
+      'm1128.027 876.992 -53.517 -136.561 -50.252 19.728 53.517 136.559z',
+  },
+  {
+    id: 'forearm_left',
+    label: 'Avant-bras gauche',
+    path:
+      'm1181.544 1013.57 -53.517 -136.559 -40.19 15.729 53.519 136.559z',
+  },
+  {
+    id: 'hand_left',
+    label: 'Main gauche',
+    path:
+      'm1215.528 1088.55 -29.991 -76.512 -40.188 15.729 29.991 76.512z',
+  },
+  // Jambes (cuisse + mollet) mappées sur leg_left / leg_right
+  {
+    id: 'leg_right',
+    label: 'Jambe droite',
+    path: 'M844.407 1078.122h58.183v253.724H844.407z',
+  },
+  {
+    id: 'leg_left',
+    label: 'Jambe gauche',
+    path: 'M939.452 1078.122h58.183v253.724h-58.183z',
+  },
+  {
+    id: 'leg_right',
+    label: 'Jambe droite',
+    path: 'M849.799 1331.846h46.655v183.213h-46.655z',
+  },
+  {
+    id: 'leg_left',
+    label: 'Jambe gauche',
+    path: 'M945.216 1331.846h46.655v183.213H945.216z',
+  },
+  // Pieds
+  {
+    id: 'foot_right',
+    label: 'Pied droit',
+    path: 'M847.135 1515.06h51.985v64.848h-51.985z',
+  },
+  {
+    id: 'foot_left',
+    label: 'Pied gauche',
+    path: 'M942.549 1515.06h51.985v64.848H942.549z',
+  },
+];
 
 function getFillForPart(partId, injuriesByPart, visualEffects) {
   const injury = injuriesByPart[partId];
@@ -46,15 +128,19 @@ export default function BodySilhouette({
     return map;
   }, [injuries]);
 
-  const partIds = bodyParts.length
-    ? bodyParts.map((p) => p.id)
-    : Object.keys(BODY_ZONES);
+  const visibleZones = useMemo(() => {
+    if (!bodyParts.length) return BODY_ZONES;
+    const allowedIds = new Set(bodyParts.map((p) => p.id));
+    return BODY_ZONES.filter((z) => allowedIds.has(z.id));
+  }, [bodyParts]);
 
   return (
     <div className={`body-silhouette-wrap ${compact ? 'body-silhouette-wrap--compact' : ''}`}>
       <svg
         className="body-silhouette"
-        viewBox="0 0 100 100"
+        // On recadre le viewBox autour du corps pour qu'il remplisse mieux le cadre
+        // (coordonnées estimées à partir du SVG : x ~ 600–1350, y ~ 600–1600)
+        viewBox="620 520 600 1100"
         preserveAspectRatio="xMidYMid meet"
       >
         <defs>
@@ -66,20 +152,18 @@ export default function BodySilhouette({
             </feMerge>
           </filter>
         </defs>
-        {partIds.map((partId) => {
-          const zone = BODY_ZONES[partId];
-          if (!zone) return null;
-          const isSelected = selectedPartId === partId;
-          const fill = getFillForPart(partId, injuriesByPart);
+        {visibleZones.map((zone, index) => {
+          const isSelected = selectedPartId === zone.id;
+          const fill = getFillForPart(zone.id, injuriesByPart);
           return (
             <path
-              key={partId}
+              key={`${zone.id}-${index}`}
               d={zone.path}
               className="body-silhouette-zone"
               data-selected={isSelected}
               style={{ fill }}
-              onClick={() => onSelectPart?.(partId)}
-              onKeyDown={(e) => e.key === 'Enter' && onSelectPart?.(partId)}
+              onClick={() => onSelectPart?.(zone.id)}
+              onKeyDown={(e) => e.key === 'Enter' && onSelectPart?.(zone.id)}
               role="button"
               tabIndex={0}
               aria-label={zone.label}
